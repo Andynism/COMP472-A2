@@ -17,10 +17,10 @@ class PuzzleNode:
         return self.state.check_puzzle()
     
     def children(self):
-        succs = Queue()
+        children = Queue()
         for move in self.state.moves:
             p = deepcopy(self.state)
             p.do_move(move)
             if p.zero is not self.state.zero:
-                succs.put(PuzzleNode(p, self, move))
+                children.put(PuzzleNode(p, self, move))
         return children
