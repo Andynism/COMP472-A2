@@ -4,6 +4,7 @@ class Puzzle:
         self.size = len(arr)
         self.rows = rows
         self.columns = columns
+        self.possible_moves = ["U", "D", "L", "R", "W", "A", "B", "C", "E"]
         self.find_zero()
 
     def find_zero(self):
@@ -122,6 +123,35 @@ class Puzzle:
                 print()
             print(self.arr[i], end = " ")
         print()
+
+    def do_move(self, move):
+        if (move == "U"):
+            self.up()
+            self.cost = 1
+        if (move == "D"):
+            self.down()
+            self.cost = 1
+        if (move == "L"):
+            self.left()
+            self.cost = 1
+        if (move == "R"):
+            self.right()
+            self.cost = 1
+        if (move == "W"):
+            self.wrap()
+            self.cost = 2
+        if (move == "A"):
+            self.diagonal_up_left()
+            self.cost = 3
+        if (move == "B"):
+            self.diagonal_up_right()
+            self.cost = 3
+        if (move == "C"):
+            self.diagonal_down_left()
+            self.cost = 3
+        if (move == "E"):
+            self.diagonal_down_right()
+            self.cost = 3
 
 a = [1,4,7,2,5,8, 3, 6,0]
 p1 = Puzzle(a, 3, 3)
