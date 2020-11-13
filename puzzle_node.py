@@ -18,9 +18,9 @@ class PuzzleNode:
     
     def children(self):
         children = Queue()
-        for move in self.state.moves:
-            p = deepcopy(self.state)
-            p.do_move(move)
-            if p.zero is not self.state.zero:
-                children.put(PuzzleNode(p, self, move))
+        for move in self.state.possible_moves:
+            copy = deepcopy(self.state)
+            copy.do_move(move)
+            if copy.zero is not self.state.zero:
+                children.put(PuzzleNode(copy, self, move))
         return children

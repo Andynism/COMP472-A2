@@ -29,13 +29,13 @@ class Puzzle:
         else:
             self.in_first_row = False
 
-        if(self.zero > (self.size - self.columns)):
+        if(self.zero >= (self.size - self.columns)):
             self.in_last_row = True
         else:
             self.in_last_row = False
 
     def check_puzzle(self):
-        return (self.check_puzzle_1 & self.check_puzzle_2)
+        return (self.check_puzzle_1() or self.check_puzzle_2())
 
     def check_puzzle_1(self):
         count = 1
@@ -76,7 +76,7 @@ class Puzzle:
 
     def right(self):
         if(not self.in_last_col):
-            self.swap(self.zero-1)
+            self.swap(self.zero+1)
 
     def diagonal_up_left(self):   
         if(not self.in_first_row):
@@ -153,6 +153,3 @@ class Puzzle:
             self.diagonal_down_right()
             self.cost = 3
 
-a = [1,4,7,2,5,8, 3, 6,0]
-p1 = Puzzle(a, 3, 3)
-print(p1.check_puzzle_2())
