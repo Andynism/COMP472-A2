@@ -5,6 +5,7 @@ class Puzzle:
         self.rows = rows
         self.columns = columns
         self.possible_moves = ["U", "D", "L", "R", "W", "A", "B", "C", "E"]
+        self.cost = 0
         self.find_zero()
 
     def find_zero(self):
