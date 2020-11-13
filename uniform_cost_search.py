@@ -1,5 +1,6 @@
 import puzzle_node
 import puzzle
+import time
 from queue import PriorityQueue
 
 def ucs(arr, rows, columns, file_count):
@@ -47,7 +48,8 @@ for x in f:
     arr = list(map(int, x.split(" ")))
     print(arr)
     parent = puzzle.Puzzle(arr, rows, columns)
+    start_time = time.time()
     end_node = ucs(arr, rows, columns, count)
-    print_solution_path(parent, end_node, count, 1)
+    print_solution_path(parent, end_node, count, time.time()-start_time)
     count += 1
 f.close()
