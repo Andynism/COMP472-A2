@@ -14,8 +14,10 @@ def ucs(arr, rows, columns, file_count):
         if leaves.empty():
             f.close()
             return None
-        node = leaves.get()[2] 
-        f.write(str(node.cost+node.state.cost) + " " + str(node.cost) + " " + str(node.state.cost) + " " + " ".join(str(x) for x in node.state.arr) + "\n")
+        node = leaves.get()[2]
+        # Write f(n) g(n) h(n) state
+        # UCS does not use f(n) or h(n) so we print 0 for them
+        f.write(f'0 {str(node.cost)} 0 {node.state.toString()} \n')
         if node.state.check_puzzle():
             f.close()
             return node
@@ -30,13 +32,28 @@ def ucs(arr, rows, columns, file_count):
 def print_solution_path(puzzle, end_node, file_count, execution_time):
     count = 0
     f = open("output/"+ str(file_count) + "_ucs_solution.txt", "w")
-    f.write(str(count) + " " + str(puzzle.cost) + " " + " ".join(str(x) for x in puzzle.arr) + "\n")
-    for i in range(len(end_node.moves)):
-        puzzle.do_move(end_node.moves[i])
-        count += 1
-        f.write(str(count) + " " + str(puzzle.cost) + " " +" ".join(str(x) for x in puzzle.arr) + "\n")
+
+    lines = []
+
+    node = end_node
+    while node != None:
+        tilemoved = 0
+        # the node that was moved is the node at the position of zero in the parent
+        if(node.parent != None):
+            tilemoved = node.state.arr[node.parent.state.zero]
+        line = f'{str(tilemoved)} {str(node.state.cost)} {" ".join(str(x) for x in node.state.arr)}'
+        lines.append(line)
+        node = node.parent
+
+    lines.reverse()
+    for line in lines:
+        f.write(line + '\n')
+    
     f.write(str(end_node.cost) + " " + str(execution_time))
     f.close()
+
+def get_solution_path():
+    pass
 
 
 rows = 2

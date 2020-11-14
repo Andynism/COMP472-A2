@@ -1,11 +1,10 @@
 class Puzzle:
-    def __init__(self, arr, rows=2, columns=4):
+    def __init__(self, arr, rows=2, columns=4, cost=0):
         self.arr = arr
         self.size = len(arr)
         self.rows = rows
         self.columns = columns
-        self.possible_moves = ["U", "D", "L", "R", "W", "A", "B", "C", "E"]
-        self.cost = 0
+        self.cost = cost
         self.find_zero()
 
     def find_zero(self):
@@ -64,60 +63,65 @@ class Puzzle:
         return True   
     
     def up(self):
-        if(not self.in_first_row):
-            self.swap(self.zero - self.columns)
+        target = (self.zero - self.columns)
+        cost = 1
+        if(target < 0):
+            target = target % len(self.arr)
+            cost = 2
+        return self.swap(target, cost)
         
     def down(self):
-        if(not self.in_last_row):
-            self.swap(self.zero + self.columns)  
+        target = (self.zero + self.columns)
+        cost = 1
+        if(target >= len(self.arr)):
+            target = target % len(self.arr)
+            cost = 2
+        return self.swap(target, cost)
 
     def left(self):
-        if(not self.in_first_col):
-            self.swap(self.zero-1)
+        target = self.zero - 1
+        cost = 1
+        if(self.in_first_col):
+            target = target + self.columns
+            cost = 2
+        return self.swap(target, cost)
 
     def right(self):
-        if(not self.in_last_col):
-            self.swap(self.zero+1)
-
-    def diagonal_up_left(self):   
-        if(not self.in_first_row):
-            if(self.in_first_col):
-                self.swap(self.zero - 1)
-            else :
-                self.swap(self.zero - self.columns - 1)
-
-    def diagonal_up_right(self):   
-        if(not self.in_first_row):
-            if(self.in_last_col):
-                self.swap(self.zero - (2*self.columns - 1))
-            else :
-                self.swap(self.zero - self.columns + 1)
-
-    def diagonal_down_left(self):   
-        if(not self.in_last_row):
-            if(self.in_first_col):
-                self.swap(self.zero + (2*self.columns - 1))
-            else :
-                self.swap(self.zero + self.columns - 1)
-
-    def diagonal_down_right(self):   
-        if(not self.in_last_row):
-            if(self.in_last_col):
-                self.swap(self.zero + 1)
-            else :
-                self.swap(self.zero + self.columns + 1)
-
-    def wrap(self):
-        if(self.in_first_col):
-            self.swap(self.zero + (self.columns - 1))
-        elif(self.in_last_col):
-            self.swap(self.zero - (self.columns - 1))
+        target = self.zero + 1
+        cost = 1
+        if(self.in_last_col):
+            target = target - self.columns
+            cost = 2
+        return self.swap(target, cost)
         
-    def swap(self, new_pos):
-        self.arr[self.zero], self.arr[new_pos] = self.arr[new_pos], self.arr[self.zero]
-        self.zero = new_pos
-        self.describe_zero()
+    def swap(self, new_pos, cost):
+        arr = self.arr.copy()
+        arr[self.zero], arr[new_pos] = arr[new_pos], arr[self.zero]
+        return Puzzle(arr, self.rows, self.columns, cost)
     
+    def corner(self):
+        if(self.in_first_row & self.in_first_col):
+            target1 = self.zero + 1 + self.columns
+            target2 = len(self.arr) - 1
+            return [self.swap(target1, 3), self.swap(target2, 3)]
+        
+        if(self.in_first_row & self.in_last_col):
+            target1 = self.zero - 1 + self.columns
+            target2 = len(self.arr) - self.columns
+            return [self.swap(target1, 3), self.swap(target2, 3)]
+
+        if(self.in_last_row & self.in_first_col):
+            target1 = self.zero + 1 - self.columns
+            target2 = self.columns - 1
+            return [self.swap(target1, 3), self.swap(target2, 3)]
+
+        if(self.in_last_row & self.in_last_col):
+            target1 = self.zero - 1 - self.columns
+            target2 = 0
+            return [self.swap(target1, 3), self.swap(target2, 3)]
+
+        return []
+
     def print_puzzle(self):
         for i in range(self.size):
             if(i % self.columns == 0):
@@ -125,32 +129,15 @@ class Puzzle:
             print(self.arr[i], end = " ")
         print()
 
-    def do_move(self, move):
-        if (move == "U"):
-            self.up()
-            self.cost = 1
-        if (move == "D"):
-            self.down()
-            self.cost = 1
-        if (move == "L"):
-            self.left()
-            self.cost = 1
-        if (move == "R"):
-            self.right()
-            self.cost = 1
-        if (move == "W"):
-            self.wrap()
-            self.cost = 2
-        if (move == "A"):
-            self.diagonal_up_left()
-            self.cost = 3
-        if (move == "B"):
-            self.diagonal_up_right()
-            self.cost = 3
-        if (move == "C"):
-            self.diagonal_down_left()
-            self.cost = 3
-        if (move == "E"):
-            self.diagonal_down_right()
-            self.cost = 3
+    def toString(self):
+        return " ".join(str(x) for x in self.arr)
 
+    def allmoves(self):
+        moves = [
+            self.up(),
+            self.down(),
+            self.left(),
+            self.right()
+        ]
+        moves.extend(self.corner())
+        return moves

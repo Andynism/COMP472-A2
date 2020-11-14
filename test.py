@@ -1,6 +1,5 @@
 import unittest
 import puzzle
-import puzzle2
 
 class TestPuzzle(unittest.TestCase):
 
@@ -39,7 +38,7 @@ class TestPuzzle(unittest.TestCase):
         assert(p_incomplete_2.in_last_row == False)
 
     def test_up(self):
-        p = puzzle2.Puzzle2([3, 4, 7, 6, 1, 2, 5, 0])
+        p = puzzle.Puzzle([3, 4, 7, 6, 1, 2, 5, 0])
         up = p.up()
         self.assertEqual(up.cost, 1)
         self.assertEqual(up.zero, 3)
@@ -51,42 +50,42 @@ class TestPuzzle(unittest.TestCase):
         
 
     def test_down(self):
-        p = puzzle2.Puzzle2([3, 4, 0, 6, 1, 2, 5, 7])
+        p = puzzle.Puzzle([3, 4, 0, 6, 1, 2, 5, 7])
         down = p.down()
         self.assertEqual(down.cost, 1)
         self.assertEqual(down.zero, 6)
         self.assertEqual(down.arr, [3, 4, 5, 6, 1, 2, 0, 7])
 
     def test_left(self):
-        p = puzzle2.Puzzle2([3, 4, 0, 6, 1, 2, 5, 7])
+        p = puzzle.Puzzle([3, 4, 0, 6, 1, 2, 5, 7])
         left = p.left()
         self.assertEqual(left.cost, 1)
         self.assertEqual(left.zero, 1)
         self.assertEqual(left.arr, [3, 0, 4, 6, 1, 2, 5, 7])
 
     def test_right(self):
-        p = puzzle2.Puzzle2([3, 4, 0, 6, 1, 2, 5, 7])
+        p = puzzle.Puzzle([3, 4, 0, 6, 1, 2, 5, 7])
         right = p.right()
         self.assertEqual(right.cost, 1)
         self.assertEqual(right.zero, 3)
         self.assertEqual(right.arr, [3, 4, 6, 0, 1, 2, 5, 7])
 
     def test_wrap_first_col(self):
-        p = puzzle2.Puzzle2([3, 4, 1, 6, 0, 2, 5, 7])
+        p = puzzle.Puzzle([3, 4, 1, 6, 0, 2, 5, 7])
         left = p.left()
         self.assertEqual(left.cost, 2)
         self.assertEqual(left.zero, 7)
         self.assertEqual(left.arr, [3, 4, 1, 6, 7, 2, 5, 0])
 
     def test_wrap_last_col(self):
-        p = puzzle2.Puzzle2([3, 4, 6, 0, 1, 2, 5, 7])
+        p = puzzle.Puzzle([3, 4, 6, 0, 1, 2, 5, 7])
         right = p.right()
         self.assertEqual(right.cost, 2)
         self.assertEqual(right.zero, 0)
         self.assertEqual(right.arr, [0, 4, 6, 3, 1, 2, 5, 7])
 
     def test_top_left_corner(self):
-        p = puzzle2.Puzzle2([0, 1, 2, 3, 4, 5, 6, 7])
+        p = puzzle.Puzzle([0, 1, 2, 3, 4, 5, 6, 7])
         moves = p.corner()
         self.assertEqual(moves[0].cost, 3)
         self.assertEqual(moves[0].zero, 5)
@@ -96,7 +95,7 @@ class TestPuzzle(unittest.TestCase):
         self.assertEqual(moves[1].arr, [7, 1, 2, 3, 4, 5, 6, 0])
 
     def test_top_right_corner(self):
-        p = puzzle2.Puzzle2([1, 2, 3, 0, 4, 5, 6, 7])
+        p = puzzle.Puzzle([1, 2, 3, 0, 4, 5, 6, 7])
         moves = p.corner()
         self.assertEqual(moves[0].cost, 3)
         self.assertEqual(moves[0].zero, 6)
@@ -106,7 +105,7 @@ class TestPuzzle(unittest.TestCase):
         self.assertEqual(moves[1].arr, [1, 2, 3, 4, 0, 5, 6, 7])
 
     def test_bottom_left_corner(self):
-        p = puzzle2.Puzzle2([1, 2, 3, 4, 0, 5, 6, 7])
+        p = puzzle.Puzzle([1, 2, 3, 4, 0, 5, 6, 7])
         moves = p.corner()
         self.assertEqual(moves[0].cost, 3)
         self.assertEqual(moves[0].zero, 1)
@@ -116,7 +115,7 @@ class TestPuzzle(unittest.TestCase):
         self.assertEqual(moves[1].arr, [1, 2, 3, 0, 4, 5, 6, 7])
 
     def test_bottom_right_corner(self):
-        p = puzzle2.Puzzle2([1, 2, 3, 4, 5, 6, 7, 0])
+        p = puzzle.Puzzle([1, 2, 3, 4, 5, 6, 7, 0])
         moves = p.corner()
         self.assertEqual(moves[0].cost, 3)
         self.assertEqual(moves[0].zero, 2)
