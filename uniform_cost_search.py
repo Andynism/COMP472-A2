@@ -52,10 +52,6 @@ def print_solution_path(puzzle, end_node, file_count, execution_time):
     f.write(str(end_node.cost) + " " + str(execution_time))
     f.close()
 
-def get_solution_path():
-    pass
-
-
 rows = 2
 columns = 4
 f = open("input/input.txt", "r")

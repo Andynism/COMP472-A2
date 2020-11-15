@@ -1,5 +1,4 @@
 from queue import Queue
-from copy import deepcopy
 
 class PuzzleNode:
     def __init__(self, puzzle, parent=None):
