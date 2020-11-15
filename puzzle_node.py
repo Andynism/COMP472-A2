@@ -9,6 +9,8 @@ class PuzzleNode:
             self.cost = 0
         else: 
             self.cost = parent.cost + self.state.cost
+        
+        self.score = self.cost
 
     def check_goal_state(self):
         return self.state.check_puzzle()
