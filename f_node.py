@@ -52,9 +52,27 @@ class FNode:
         score = 0
         for index, value in enumerate(self.state.arr):
             i2 = target.index(value)
-            dx = (i2 % self.state.columns) - (index % self.state.columns)
-            dy = math.floor(i2 / self.state.columns) - math.floor(index / self.state.columns)
-            score += abs(dx)
-            score += abs(dy)
-        return score
 
+            dx = abs((i2 % self.state.columns) - (index % self.state.columns))
+            x_wrapping_move_cost = self.state.columns - dx + 1
+            x_wrapping_move_efficient = False
+            if x_wrapping_move_cost < dx:
+                x_wrapping_move_efficient = True
+                dx = x_wrapping_move_cost
+                pass
+
+
+            dy = abs(math.floor(i2 / self.state.columns) - math.floor(index / self.state.columns))
+            y_wrapping_move_cost = self.state.rows - dy + 1
+            y_wrapping_move_efficient = False
+            if y_wrapping_move_cost < dy:
+                y_wrapping_move_efficient = True
+                dy = y_wrapping_move_cost
+                pass
+            
+            score += dx
+            score += dy
+
+            if x_wrapping_move_efficient and y_wrapping_move_efficient:
+                score -= 1
+        return score
