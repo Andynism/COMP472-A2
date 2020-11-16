@@ -1,7 +1,7 @@
 from queue import Queue
 import math
 
-class HeuristicNode:
+class FNode:
     def __init__(self, puzzle, heuristic, parent=None):
         self.state = puzzle
         self.parent = parent
@@ -9,10 +9,10 @@ class HeuristicNode:
 
         if (parent is None):
             self.cost = 0
-        else: 
+        else:
             self.cost = parent.cost + self.state.cost
 
-        self.score = self.calculate_heuristic(heuristic)
+        self.score = self.calculate_heuristic(heuristic) + self.cost
 
     def check_goal_state(self):
         return self.state.check_puzzle()
@@ -21,7 +21,7 @@ class HeuristicNode:
         children = Queue()
         for move in self.state.allmoves():
             if move.zero is not self.state.zero:
-                children.put(HeuristicNode(move, self.heuristic, self))
+                children.put(FNode(move, self.heuristic, self))
         return children
 
     def calculate_heuristic(self, heuristic):
@@ -39,7 +39,7 @@ class HeuristicNode:
             return min(score1, score2)
 
         else:
-            raise Exception("A heuristic must be specified in HeuristicNode")
+            raise Exception("A heuristic must be specified.")
 
     def hamming(self, target):
         score = 0
@@ -76,4 +76,3 @@ class HeuristicNode:
             if x_wrapping_move_efficient and y_wrapping_move_efficient:
                 score -= 1
         return score
-
