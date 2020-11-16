@@ -15,11 +15,11 @@ def search(first_node, filename, line_writer):
             return None
         node = leaves.get()[2]
 
-        f.write(line_writer(node))
-        if node.state.check_puzzle():
-            f.close()
-            return node
-        elif node.state.arr not in closed:
+        if node.state.arr not in closed:
+            f.write(line_writer(node))
+            if node.state.check_puzzle():
+                f.close()
+                return node
             closed.append(node.state.arr)
             children = node.children()
             while not children.empty():
