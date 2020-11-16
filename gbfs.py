@@ -16,7 +16,7 @@ def solve(heuristic, number):
         line_writer = lambda node : f'0 0 {str(node.score)} {node.state.toString()} \n'
 
         start_time = time.time()
-        end_node = search(first_node, search_filename, line_writer)
+        end_node = search(first_node, search_filename, line_writer, lambda x, y : False)
 
         solution_filename = f'output/{index}_gbfs-h{number}_solution.txt'
         print_solution_path(end_node, solution_filename, time.time()-start_time)

@@ -15,7 +15,7 @@ def solve(heuristic, number):
         line_writer = lambda node: f'{str(node.score)} {str(node.cost)} {str(node.calculate_heuristic(heuristic))} {node.state.toString()} \n'
 
         start_time = time.time()
-        end_node = search(first_node, search_filename, line_writer)
+        end_node = search(first_node, search_filename, line_writer, lambda node, previousCost: node.cost < previousCost)
 
         solution_filename = f'output/{index}_astar-h{number}_solution.txt'
         print_solution_path(end_node, solution_filename, time.time() - start_time)
