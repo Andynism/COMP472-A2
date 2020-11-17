@@ -5,7 +5,7 @@ def load():
     columns = 4
     puzzles = []
     
-    f = open("input/input.txt", "r")
+    f = open("input/50_puzzles.txt", "r")
     for line in f:
         line = line.rstrip()
         arr = list(map(int, line.split(" ")))
