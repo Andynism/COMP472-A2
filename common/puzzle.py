@@ -1,5 +1,5 @@
 class Puzzle:
-    def __init__(self, arr, rows=2, columns=4, cost=0):
+    def __init__(self, arr, rows, columns, cost=0):
         self.arr = arr
         self.size = len(arr)
         self.rows = rows
