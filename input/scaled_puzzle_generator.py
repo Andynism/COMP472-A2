@@ -2,10 +2,10 @@ import random
 
 rows = 2
 cols = 4
-for i in range (3):
+for i in range (4):
     if i==0:
         pass
-    elif i%2 == 1:
+    elif i%2 == 0:
         rows +=1
     else:
         cols +=1
