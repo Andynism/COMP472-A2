@@ -20,5 +20,4 @@ def solve(heuristic, number):
         solution_filename = f'output_scaled/{index}_astar-h{number}_solution.txt'
         print_solution_path(end_node, solution_filename, time.time() - start_time)
 
-# solve("hamming", 1)
 solve("manhattan", 2)
