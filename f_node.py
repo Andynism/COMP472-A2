@@ -38,6 +38,11 @@ class FNode:
             score2 = self.manhattan(goal2)
             return min(score1, score2)
 
+        elif (heuristic == "naive"):
+            if (self.state.arr[len(self.state.arr)-1] == 0):
+                return 0
+            else:
+                return 1
         else:
             raise Exception("A heuristic must be specified.")
 

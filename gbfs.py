@@ -23,3 +23,4 @@ def solve(heuristic, number):
 
 solve("hamming", 1)
 solve("manhattan", 2)
+solve("naive", 3)
